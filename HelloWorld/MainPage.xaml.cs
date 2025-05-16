@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Microsoft.Maui.Controls.Embedding;
 
 namespace HelloWorld;
 
@@ -21,7 +22,11 @@ public partial class MainPage : ContentPage
 		else
 			CounterBtn.Text = $"Clicked {count} times";
 
+		#if ANDROID
+			var mainActivity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity as MainActivity;
+			mainActivity.showWidget();
+		#endif
 
 	}
-}
 
+}
