@@ -17,7 +17,14 @@ namespace HelloWorld.Platforms.Android
         WindowManagerLayoutParams layoutParams;
         IWindowManager windowManager;
         View floatView;
+
+        static TextView textView;
         
+        public static void showMessage(string message)
+        {
+            textView.Text = message;
+        }
+
         public override void OnCreate()
         {
             base.OnCreate();
@@ -38,7 +45,7 @@ namespace HelloWorld.Platforms.Android
         }
 
 
-       private void showFloatingWindow()
+        private void showFloatingWindow()
         {
             windowManager = GetSystemService(WindowService).JavaCast<IWindowManager>();
             LayoutInflater mLayoutInflater = LayoutInflater.From(ApplicationContext);
@@ -47,7 +54,7 @@ namespace HelloWorld.Platforms.Android
             floatView.SetOnTouchListener(this);
 
 
-           // set LayoutParam
+            // set LayoutParam
             layoutParams = new WindowManagerLayoutParams();
             if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
             {
@@ -66,6 +73,7 @@ namespace HelloWorld.Platforms.Android
             layoutParams.X = 300;
             layoutParams.Y = 300;
             windowManager.AddView(floatView, layoutParams);
+            textView = floatView.FindViewById<TextView>(Resource.Id.floatview_text);
 
 
        }

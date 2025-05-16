@@ -13,7 +13,7 @@ namespace HelloWorld;
 [Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
 public class MainActivity : MauiAppCompatActivity
 {
-        Intent? intent;
+    Intent? intent;
 
     public void showWidget()
     {
@@ -35,19 +35,19 @@ public class MainActivity : MauiAppCompatActivity
         base.OnStop();
     }
         
-        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+    protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+    {
+        if (requestCode == 0)
         {
-            if (requestCode == 0)
+            if (!Settings.CanDrawOverlays(this))
             {
-                if (!Settings.CanDrawOverlays(this))
-                {
 
 
-               }
-                else
-                {
-                    StartService(new Intent(this, typeof(FloatingService)));
-                }
+            }
+            else
+            {
+                StartService(new Intent(this, typeof(FloatingService)));
             }
         }
+    }
 }

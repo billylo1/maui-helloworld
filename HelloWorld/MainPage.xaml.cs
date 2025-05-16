@@ -1,5 +1,8 @@
 ﻿using System.Globalization;
-using Microsoft.Maui.Controls.Embedding;
+
+#if ANDROID
+using HelloWorld.Platforms.Android;
+#endif
 
 namespace HelloWorld;
 
@@ -11,21 +14,21 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 		WelcomeLabel.Text = CultureInfo.CurrentUICulture.DisplayName;
+		var mainActivity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity as MainActivity;
+		mainActivity.showWidget();
+
 	}
 
 	private void OnCounterClicked(object sender, EventArgs e)
 	{
 		count++;
+		CounterBtn.Text = $"Clicked {count} time";
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
+#if ANDROID
 
-		#if ANDROID
-			var mainActivity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity as MainActivity;
-			mainActivity.showWidget();
-		#endif
+		HelloWorld.Platforms.Android.FloatingService.showMessage($"Clicked {count} time");
+#endif
+
 
 	}
 
